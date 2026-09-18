@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <FrontendSrc>$(MSBuildThisFileDirectory)..\..\..\frontend\src</FrontendSrc>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharedAgentChat.Application\SharedAgentChat.Application.csproj" />
+    <ProjectReference Include="..\SharedAgentChat.Infrastructure\SharedAgentChat.Infrastructure.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="SharedAgentChat.Tests" />
+  </ItemGroup>
+  <Target Name="CopyFrontend" BeforeTargets="BeforeBuild;ResolveStaticWebAssetsInputs">
+    <ItemGroup>
+      <FrontendFiles Include="$(FrontendSrc)\**\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(FrontendFiles)" DestinationFiles="@(FrontendFiles->'wwwroot\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

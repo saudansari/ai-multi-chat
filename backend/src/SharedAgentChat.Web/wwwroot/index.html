@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+  Shared Agent Chat POC.
+  Open / or /chat?session=poc-session. Missing session query defaults to poc-session.
+  SignalR hub: /hubs/chat
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shared Agent Chat POC</title>
+  <link rel="stylesheet" href="/css/chat.css" />
+</head>
+<body>
+  <section id="join-panel" class="panel join-panel" aria-labelledby="join-heading">
+    <div class="join-card">
+      <h1 id="join-heading">Shared Agent Chat</h1>
+      <p class="lede">Join the shared session. Your API key stays in this tab’s memory only.</p>
+      <p id="agent-mode" class="lede agent-mode">Checking agent mode…</p>
+      <form id="join-form" autocomplete="off">
+        <label for="display-name">Display name</label>
+        <input id="display-name" name="displayName" type="text" maxlength="80" required autofocus />
+
+        <label for="api-key">Cursor API key</label>
+        <input id="api-key" name="apiKey" type="password" autocomplete="off" required />
+
+        <p id="join-error" class="error" hidden></p>
+        <button id="join-button" type="submit">Join</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="chat-panel" class="panel chat-panel" hidden aria-hidden="true" aria-labelledby="chat-heading">
+    <header class="chat-header">
+      <div>
+        <h1 id="chat-heading">Shared Agent Chat</h1>
+        <p class="meta">
+          Session <span id="session-id"></span>
+          · You are <span id="own-name"></span>
+          · Agent <span id="header-agent-mode"></span>
+        </p>
+      </div>
+    </header>
+
+    <div id="message-list" class="message-list" role="log" aria-live="polite"></div>
+
+    <div class="presence" aria-live="polite">
+      <p id="typing-line" class="presence-line" hidden></p>
+      <p id="agent-line" class="presence-line" hidden>Agent is responding…</p>
+      <p id="connection-line" class="presence-line" hidden>Reconnecting…</p>
+    </div>
+
+    <form id="composer" class="composer">
+      <label class="sr-only" for="message-input">Message</label>
+      <textarea id="message-input" rows="2" placeholder="Message (Enter to send, Shift+Enter for a new line)"></textarea>
+      <div class="composer-row">
+        <p id="send-error" class="error" hidden></p>
+        <button id="send-button" type="submit">Send</button>
+      </div>
+    </form>
+  </section>
+
+  <script src="/lib/signalr/signalr.min.js"></script>
+  <script src="/js/chat.js"></script>
+</body>
+</html>
